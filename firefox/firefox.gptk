@@ -1,0 +1,49 @@
+# gptokeyb mapping for Firefox on Powkiddy RGB10 Max 3 Pro
+#
+# Replaces the Flip 2's InputPlumber profile. gptokeyb turns gamepad input
+# into keyboard and mouse events, which is how every PortMaster port does it,
+# so it works on this device without InputPlumber.
+#
+# Right stick moves the pointer. Y sends F12, which the launcher binds to the
+# onscreen keyboard toggle when the compositor supports keybinds.
+
+# --- pointer -----------------------------------------------------------
+right_analog_up = mouse_movement_up
+right_analog_down = mouse_movement_down
+right_analog_left = mouse_movement_left
+right_analog_right = mouse_movement_right
+mouse_slow_scale = 50
+deadzone_mode = scaled_radial
+deadzone = 8000
+deadzone_scale = 8
+deadzone_delay = 16
+
+# --- clicks ------------------------------------------------------------
+a = mouse_left
+r2 = mouse_left
+l2 = mouse_right
+r3 = mouse_slow
+
+# --- navigation --------------------------------------------------------
+b = alt+left
+x = f5
+y = f12
+start = enter
+back = tab
+
+up = up
+down = down
+left = left
+right = right
+
+l1 = pageup
+r1 = pagedown
+
+left_analog_up = pageup
+left_analog_down = pagedown
+left_analog_left = alt+left
+left_analog_right = alt+right
+
+# --- exit --------------------------------------------------------------
+# ROCKNIX's global exit chord (L1 + Select + Start) is handled by set_kill
+# in launch.sh, so no binding is needed here.

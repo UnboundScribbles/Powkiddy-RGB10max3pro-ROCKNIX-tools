@@ -1,0 +1,140 @@
+REN'PY HUB for ROCKNIX
+======================
+
+One port folder that runs any number of Ren'Py games. Each game gets its own
+entry in the Ports menu.
+
+This is a personal setup, not an official PortMaster port. It uses PortMaster's
+own Ren'Py runtimes, the same way PortMaster's Ren'Py ports do.
+
+
+INSTALL
+-------
+
+1. Copy "RenPy Scan.sh" and "RenPy Build Runtime.sh" into your ports folder,
+   next to the other .sh launchers.
+2. Copy the "renpy" folder into the same ports folder.
+   You should end up with:
+       ports/RenPy Scan.sh
+       ports/RenPy Build Runtime.sh
+       ports/renpy/run.sh
+       ports/renpy/games/
+3. Make sure a Ren'Py runtime is installed. Installing any PortMaster Ren'Py port
+   downloads one:
+       "Do NOT Take This Cat Home"  ->  renpy_8.3.4
+       "Butterfly Soup"             ->  renpy_8.1.3
+
+
+ADDING A GAME
+-------------
+
+Make a folder per game under ports/renpy/games/ and put the game's "game" folder
+inside it:
+
+    ports/renpy/games/Butterfly Soup/game/...
+    ports/renpy/games/Some Other VN/game/...
+
+The "game" folder comes from the PC download. The download's lib/ and renpy/
+folders are not used, so you can leave them behind.
+
+Dumping the whole extracted download also works. If <name>/game is missing, one
+level deeper is checked, so this is found too:
+
+    ports/renpy/games/Some VN/SomeVN-1.0-pc/game/...
+
+Then run "RenPy Scan" from the Ports menu. It makes one entry per game, named
+"RenPy - <folder name>". Refresh your gamelist or restart EmulationStation to
+see them. Run it again any time you add or remove a game.
+
+
+WHICH GAMES WORK
+----------------
+
+A Ren'Py game's scripts are compiled bytecode stamped with the version that
+built them. A runtime reads its own version or older, never newer. PortMaster's
+newest is 8.3.4, so a game built with 8.4 or 8.5 needs a newer runtime, which
+you can build yourself (next section).
+
+RenPy Scan reads each game's script_version.txt and picks the closest runtime
+that is new enough, and tells you up front when nothing available can read it.
+If a newer runtime shows up in PortMaster later, installing it is enough: the
+scan finds it on its own, with no editing here.
+
+To check a game before downloading gigabytes: game/script_version.txt.
+
+
+BUILDING A NEWER RUNTIME YOURSELF
+---------------------------------
+
+Nothing gets compiled. PortMaster's renpy_8.1.3 and renpy_8.3.4 are official
+upstream Ren'Py builds, repackaged: both say official = True in
+renpy/vc_version.py, and both are an SDK with the desktop extras removed. Ren'Py
+builds for linux-aarch64 officially, so the ARM64 binaries already exist.
+
+    1. Download the ARM SDK, which is the "sdkarm" file and NOT the plain "sdk"
+       one. renpy.org lists it as "ARM Linux (Raspberry Pi and Chromebook)":
+
+           https://www.renpy.org/dl/8.5.2/renpy-8.5.2-sdkarm.tar.bz2
+
+       Change the version number for whichever you need. The ordinary
+       renpy-8.5.2-sdk.tar.bz2 carries only x86_64 Linux, Mac and Windows
+       binaries, so nothing in it runs on a handheld.
+    2. Put the archive, exactly as downloaded, in:
+           ports/renpy/sdk/
+       No need to unpack it anywhere. An already-extracted folder works too.
+    3. Run "RenPy Build Runtime" from the Ports menu. It extracts the archive,
+       checks the SDK has an ARM64 build, works out the version, and assembles
+           ports/renpy/runtimes/renpy_8.5.2/
+    4. Run "RenPy Scan". Games up to that version get assigned to it.
+    5. Delete ports/renpy/sdk/ afterwards if you want the space back.
+
+Extraction uses whichever tool the device has: ROCKNIX's own tar, unzip, or the
+7-Zip binary PortMaster ships, which handles bz2, gz, xz, tar and zip. So the
+whole job can be done on the handheld, with no PC involved.
+
+The one thing that can stop this: an SDK with no lib/py3-linux-aarch64 folder
+has no ARM64 binaries, and nothing on the device can create them. The build
+script checks for exactly that and says so rather than producing something
+broken.
+
+A runtime built this way is a plain folder, so no mksquashfs is needed. Drop-in
+.squashfs runtimes from PortMaster keep working alongside it.
+
+
+SAVES
+-----
+
+Each game keeps its own saves in ports/renpy/games/<name>/conf, so the whole
+game folder is portable and nothing is shared between games.
+
+
+FORCING A RUNTIME
+-----------------
+
+Put a runtime name in a file next to the game folder to override the guess:
+
+    ports/renpy/games/<name>/runtime.txt     containing   renpy_8.1.3
+
+Then run RenPy Scan again.
+
+
+CONTROLS
+--------
+
+    A / Start           Enter, advances dialogue
+    Back                Esc, menu
+    D-pad / left stick  arrow keys
+    L1 / R1             Tab, skip
+    X                   H, hide the interface
+    Y                   Ctrl held, fast skip
+
+Edit ports/renpy/renpy.gptk to change these. It applies to every game.
+
+
+IF SOMETHING GOES WRONG
+-----------------------
+
+    ports/renpy/renpy-scan.txt     what the scan found
+    ports/renpy/logs/<name>.txt    what happened on the last launch of that game
+
+Send either one over.

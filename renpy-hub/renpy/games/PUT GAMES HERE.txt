@@ -1,0 +1,6 @@
+One folder per game, each holding the game's "game" folder:
+
+    games/Butterfly Soup/game/...
+    games/Some Other VN/game/...
+
+Then run "RenPy Scan" from the Ports menu.

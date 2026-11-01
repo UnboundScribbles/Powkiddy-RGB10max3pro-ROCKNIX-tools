@@ -1,0 +1,14 @@
+# Things that appear on the device, not in the repo
+renpy-hub/renpy/games/*
+!renpy-hub/renpy/games/PUT GAMES HERE.txt
+renpy-hub/renpy/sdk/*
+!renpy-hub/renpy/sdk/PUT THE SDK HERE.txt
+renpy-hub/renpy/runtimes/
+renpy-hub/renpy/logs/*
+!renpy-hub/renpy/logs/.gitkeep
+renpy-hub/renpy/conf/
+*.txt.bak
+*.bak
+renpy-scan.txt
+build-runtime.txt
+port-diagnostics.txt

@@ -1,0 +1,21 @@
+Put the Ren'Py ARM SDK here, then run "RenPy Build Runtime" from the Ports menu.
+
+IT MUST BE THE "sdkarm" DOWNLOAD, NOT THE PLAIN "sdk" ONE.
+
+    https://www.renpy.org/dl/8.5.2/renpy-8.5.2-sdkarm.tar.bz2
+
+renpy.org lists it as "ARM Linux (Raspberry Pi and Chromebook)". Change the
+version number for whichever one you need. The ordinary renpy-8.5.2-sdk.tar.bz2
+contains only x86_64 Linux, Mac and Windows binaries, so nothing in it can run
+on this handheld.
+
+Either form works here:
+
+  sdk/renpy-8.5.2-sdkarm.tar.bz2   the archive exactly as downloaded
+  sdk/renpy-8.5.2-sdkarm/          an already-extracted folder
+
+The script extracts the archive itself using tar, unzip, or the 7-Zip binary
+PortMaster ships, so there is no need to unpack it on a computer.
+
+What makes an SDK usable is a lib/py3-linux-aarch64 folder inside it. The script
+checks for exactly that before copying anything.
